@@ -18,6 +18,10 @@ public class Order {
         dishes.remove(dish);
     }
 
+    public List<Dish> getDishes() {
+        return dishes;
+    }
+
     public double calculateTotalPrice() {
         double total = 0;
         for(Dish dish : dishes) {

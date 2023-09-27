@@ -3,18 +3,19 @@ package Powtutka.Restourant;
 public class Dish {
     private String name;
 
-    private int price;
+    private double price;
 
-    public Dish(String name, int price) {
+    public Dish(String name, double price) {
         this.name = name;
         this.price = price;
     }
+
 
     public String getName() {
         return name;
     }
 
-    public int getPrice() {
+    public double getPrice() {
         return price;
     }
 }

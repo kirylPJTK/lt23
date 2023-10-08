@@ -45,8 +45,6 @@ class Resource {
     public synchronized void changeI() { // Сделаем метод synchronized для безопасности
         int i = this.i;
 
-
-
         i++;
         this.i = i;
     }

@@ -3,12 +3,13 @@ package Junior_java_develop.TASK5.Thread;
 public class CurrentThreadDemo {
     public static void main(String[] args) {
         MyThread myThread = new MyThread();
+
         myThread.start();
 
         try {
             myThread.join();
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
 
         System.out.println("thread main");

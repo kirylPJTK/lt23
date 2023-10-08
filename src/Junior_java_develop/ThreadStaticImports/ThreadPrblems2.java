@@ -9,6 +9,7 @@ public class ThreadPrblems2 {
 
         MyThread myThread2 = new MyThread();
 
+
         myThread1.start();
         myThread2.start();
 

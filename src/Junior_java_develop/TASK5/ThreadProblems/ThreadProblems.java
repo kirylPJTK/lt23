@@ -6,7 +6,9 @@ public class ThreadProblems {
         resource.i = 5;
         Mythread myThread1 = new Mythread();
         myThread1.setName("one");
+
         Mythread myThread2 = new Mythread();
+
 
         myThread1.setResource(resource);
         myThread2.setResource(resource);
@@ -44,6 +46,9 @@ class Resource {
 
     public synchronized void changeI() { // Сделаем метод synchronized для безопасности
         int i = this.i;
+        if (Thread.currentThread().getName().equals("one")) {
+            Thread.yield();
+        }
 
         i++;
         this.i = i;

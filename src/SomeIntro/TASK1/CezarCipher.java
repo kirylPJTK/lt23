@@ -3,74 +3,46 @@ package SomeIntro.TASK1;
 import java.util.List;
 import java.util.Scanner;
 
+import java.util.Scanner;
+
 public class CezarCipher {
     public static void main(String[] args) {
-//        for (int i = 75; i < 150; i++) {
-//            System.out.println(i + " - " + (char)i);
-//        }
-
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Please enter any word you wanna: ");
-        String enterWord = scanner.nextLine();
-//        System.out.println(enterWord);
+        System.out.println("Please enter any word you want: ");
+        String enteredWord = scanner.nextLine();
 
-        EncryptDecrypt encryptDecrypt = new EncryptDecrypt();
-        System.out.println("Encrypted word: " + encryptDecrypt.encrypt(enterWord, 3, false));
-        System.out.println("Decrypted word: " + encryptDecrypt.decrypt(3));
+        System.out.println("Enter shift value: ");
+        int shift = scanner.nextInt();
+
+        System.out.println("Enter direction (0 for left, 1 for right): ");
+        boolean direction = scanner.nextInt() == 1;
+
+        String encryptedWord = EncryptDecrypt.encrypt(enteredWord, shift, direction);
+        System.out.println("Encrypted word: " + encryptedWord);
+
+        String decryptedWord = EncryptDecrypt.decrypt(encryptedWord, shift, direction);
+        System.out.println("Decrypted word: " + decryptedWord);
     }
 }
 
-class EncryptDecrypt{
-    private String word;
-    private int shift;
-    private boolean side;
-
-    private String resultEncrypt;
-    private String resultDecrypt;
-
-    // boolean side == if true -> right; if false -> left;
-    public String encrypt(String word, int shift, boolean side) {
-        this.word = word;
-        this.shift = shift;
-        this.side = side;
+class EncryptDecrypt {
+    public static String encrypt(String word, int shift, boolean right) {
         StringBuilder result = new StringBuilder();
 
         for (char c : word.toCharArray()) {
             if (Character.isLetter(c)) {
                 char base = Character.isLowerCase(c) ? 'a' : 'A';
-                if (side) {
-                    result.append((char) (base + (c - base + shift) % 26));
-
-                } else {
-                    result.append((char) (base + (c - base - shift) % 26));
-                }
+                int newChar = base + (right ? (c - base + shift) : (c - base - shift + 26)) % 26;
+                result.append((char) newChar);
             } else {
                 result.append(c);
             }
         }
-        resultEncrypt = result.toString();
 
-        return resultEncrypt;
+        return result.toString();
     }
 
-    public String decrypt(int shift) {
-        this.shift = shift;
-        StringBuilder result = new StringBuilder();
-
-        for (char c : resultEncrypt.toCharArray()) {
-            if (Character.isLetter(c)) {
-                char base = Character.isLowerCase(c) ? 'a' : 'A';
-                if (side) {
-                    result.append((char) (base + (c - base - shift) % 26));
-                } else {
-                    result.append((char) (base + (c - base + shift) % 26));
-                }
-
-            } else result.append(c);
-        }
-        resultDecrypt = result.toString();
-        return resultDecrypt;
+    public static String decrypt(String word, int shift, boolean right) {
+        return encrypt(word, shift, !right);
     }
-
-
 }

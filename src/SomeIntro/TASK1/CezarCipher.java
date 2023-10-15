@@ -8,20 +8,27 @@ import java.util.Scanner;
 public class CezarCipher {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Please enter any word you want: ");
-        String enteredWord = scanner.nextLine();
 
-        System.out.println("Enter shift value: ");
-        int shift = scanner.nextInt();
+        try {
+            System.out.println("Please enter any word you want: ");
+            String enteredWord = scanner.nextLine();
 
-        System.out.println("Enter direction (0 for left, 1 for right): ");
-        boolean direction = scanner.nextInt() == 1;
+            System.out.println("Enter shift value: ");
+            int shift = scanner.nextInt();
 
-        String encryptedWord = EncryptDecrypt.encrypt(enteredWord, shift, direction);
-        System.out.println("Encrypted word: " + encryptedWord);
+            System.out.println("Enter direction (0 for left, 1 for right): ");
+            boolean direction = scanner.nextInt() == 1;
 
-        String decryptedWord = EncryptDecrypt.decrypt(encryptedWord, shift, direction);
-        System.out.println("Decrypted word: " + decryptedWord);
+            String encryptedWord = EncryptDecrypt.encrypt(enteredWord, shift, direction);
+            System.out.println("Encrypted word: " + encryptedWord);
+
+            String decryptedWord = EncryptDecrypt.decrypt(encryptedWord, shift, direction);
+            System.out.println("Decrypted word: " + decryptedWord);
+        } catch (Exception e) {
+            System.out.println("An error occurred: " + e.getMessage());
+        } finally {
+            scanner.close();
+        }
     }
 }
 

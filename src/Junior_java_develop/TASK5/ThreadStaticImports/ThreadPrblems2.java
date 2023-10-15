@@ -1,4 +1,4 @@
-package Junior_java_develop.ThreadStaticImports;
+package Junior_java_develop.TASK5.ThreadStaticImports;
 
 public class ThreadPrblems2 {
     public static void main(String[] args) {

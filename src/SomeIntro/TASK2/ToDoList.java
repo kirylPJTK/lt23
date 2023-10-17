@@ -120,7 +120,7 @@ public class ToDoList {
         String filePath = "/Users/kirillglusakov/IdeaProjects/Lato 2023/ToDoList.txt";
 //        String lineToRemove = "Строка для удаления";
 
-        // Прочитайте файл и исключите строку
+        // read file and add line
         List<String> lines = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line;

@@ -5,9 +5,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class ToDoList {
+public class ToDoList2 {
     public static void main(String[] args) {
         List<String> tasks = new ArrayList<>();
+
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
@@ -26,28 +27,26 @@ public class ToDoList {
                     System.out.print("Введите задачу: ");
                     String task = scanner.nextLine();
                     tasks.add(task);
-                    writeList("ToDoList.txt", task);
+                    writeList(task);
                     System.out.println("Задача добавлена.");
                     break;
                 case 2:
-                    if (tasks.isEmpty()) {
+                    if (isFileEmpty()) {
                         System.out.println("Список задач пуст.");
                     } else {
                         System.out.println("Список задач:");
-                        showList("ToDoList.txt");
+                        showlist();
                     }
                     break;
                 case 3:
-                    if (tasks.isEmpty()) {
+                    if (isFileEmpty()) {
                         System.out.println("Список задач пуст.");
                     } else {
-                        System.out.print("Введите номер задачи для удаления: ");
+                        System.out.println("Введите номер задачи для удаления: ");
                         int taskNumber = scanner.nextInt();
                         if (taskNumber >= 1 && taskNumber <= tasks.size()) {
                             tasks.remove(taskNumber - 1);
                             System.out.println("Задача удалена.");
-                            // Теперь удаляем из файла
-                            deleteTask("ToDoList.txt", taskNumber - 1);
                         } else {
                             System.out.println("Неверный номер задачи.");
                         }
@@ -62,8 +61,6 @@ public class ToDoList {
                         if (taskNumber >= 1 && taskNumber <= tasks.size()) {
                             System.out.println("Задача '" + tasks.get(taskNumber - 1) + "' отмечена выполненной.");
                             tasks.remove(taskNumber - 1);
-                            // Теперь удаляем из файла
-                            deleteTask("ToDoList.txt", taskNumber - 1);
                         } else {
                             System.out.println("Неверный номер задачи.");
                         }
@@ -79,50 +76,73 @@ public class ToDoList {
         }
     }
 
-    public static void writeList(String filename, String info) {
-        try (FileWriter writer = new FileWriter(filename, true)) {
-            writer.append(info);
-            writer.append('\n');
+    public static void writeList(String info) {
+        try ( FileWriter writer = new FileWriter("ToDoList.txt", true)){
+           writer.append(info);
+           writer.append('\n');
         } catch (IOException e) {
-            System.err.println("Ошибка записи в файл: " + e.getMessage());
+            throw new RuntimeException(e);
         }
+
     }
 
-    public static void showList(String fileName) {
-        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(fileName))){
+    public static void showlist() {
+        String filePath = "/Users/kirillglusakov/IdeaProjects/Lato 2023/ToDoList.txt";
+
+        try {
+            File file = new File(filePath);
+
+            FileReader fileReader = new FileReader(file);
+
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+
             String line;
             int i = 1;
+
             while ((line = bufferedReader.readLine()) != null) {
                 System.out.println(i++ + ") " + line);
             }
+
+            bufferedReader.close();
+            fileReader.close();
         } catch (IOException e) {
             System.err.println("Ошибка чтения файла: " + e.getMessage());
         }
     }
 
-   public static void deleteTask(String fileName, int taskIndex) {
+    public static boolean isFileEmpty() {
+        File file = new File("/Users/kirillglusakov/IdeaProjects/Lato 2023/ToDoList.txt"); //  путь к файлу
+
+        return file.exists() && file.length() == 0;
+    }
+
+    public static void deleteInfo(int taskNumber) {
+        String filePath = "/Users/kirillglusakov/IdeaProjects/Lato 2023/ToDoList.txt";
+//        String lineToRemove = "Строка для удаления";
+
+        // read file and add line
         List<String> lines = new ArrayList<>();
-        try(BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line;
-            int i = 0;
             while ((line = reader.readLine()) != null) {
-                if (i!=taskIndex) {
+                if (!line.equals(taskNumber)) {
                     lines.add(line);
                 }
-                i++;
             }
         } catch (IOException e) {
-            System.err.println("Ошибка чтения файла: " + e.getMessage());
-
+            e.printStackTrace();
         }
 
-        try(BufferedWriter writer = new BufferedWriter(new FileWriter(fileName))) {
-            for (String updateLine : lines) {
-                writer.write(updateLine);
+        // Запишите оставшиеся строки обратно в файл
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
+            for (String updatedLine : lines) {
+                writer.write(updatedLine);
                 writer.newLine();
             }
         } catch (IOException e) {
-            System.err.println("Ошибка записи в файл: " + e.getMessage());
+            e.printStackTrace();
         }
-   }
+    }
+
+
 }

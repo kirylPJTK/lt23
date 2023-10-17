@@ -1,7 +1,7 @@
 package Junior_java_develop.TASK5.VolatileWork;
 
 public class VolatileMain {
-    static int i;
+    volatile static int i;
 
     public static void main(String[] args) {
         new MyThreadRead().start();

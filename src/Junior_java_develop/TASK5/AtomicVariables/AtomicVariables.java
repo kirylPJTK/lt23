@@ -15,6 +15,7 @@ public class AtomicVariables {
             throw new RuntimeException(e);
         }
         System.out.println(atomicInteger.get());
+        System.out.println("Atomic");
     }
 
     static class MyThreadA extends Thread{

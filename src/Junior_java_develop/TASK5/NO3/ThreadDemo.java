@@ -19,7 +19,7 @@ public class ThreadDemo {
 class NewThread implements Runnable {
     Thread t;
     NewThread() {
-        t = new Thread(this, "Subsidiary thread");
+        t = new Thread(this, "Demonstration thread");
         System.out.println("Subsidiary thread is ready" + t);
         t.start();
     }

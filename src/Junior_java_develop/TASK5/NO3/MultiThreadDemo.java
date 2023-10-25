@@ -5,6 +5,7 @@ public class MultiThreadDemo {
         new NewMultiThread("Thread 1");
         new NewMultiThread("Thread 2");
         new NewMultiThread("Thread 3");
+        // New threads
 
         try {
             Thread.sleep(10000);

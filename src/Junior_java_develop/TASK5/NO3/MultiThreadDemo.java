@@ -13,6 +13,7 @@ public class MultiThreadDemo {
             System.out.println("Main Thread error");
         }
         System.out.println("Main Thread finished");
+
     }
 }
 

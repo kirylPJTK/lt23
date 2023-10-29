@@ -1,59 +1,70 @@
 package Junior_java_develop.TASK5.DeadLock;
 
-public class DeadLock {
+import java.util.TreeMap;
+
+public class DeadLock implements Runnable{
+    A a = new A();
+    B b = new B();
+
+    DeadLock() {
+        Thread.currentThread().setName("Main thread");
+
+        Thread t = new Thread(this, "Rival Thread");
+        t.start();
+
+        a.foo(b);
+
+        System.out.println("Back to main thread");
+    }
+
+    @Override
+    public void run() {
+        b.bar(a);
+        System.out.println("Back to another thread");
+    }
+
     public static void main(String[] args) {
-        ResourceA resourceA = new ResourceA();
-        ResourceB resourceB = new ResourceB();
-        resourceA.resourceB = resourceB;
-        resourceB.resourceA = resourceA;
-        MyThread1 myThread1 = new MyThread1();
-        MyThread2 myThread2 = new MyThread2();
-        myThread1.resourceA = resourceA;
-        myThread2.resourceB = resourceB;
-        myThread1.start();
-        myThread2.start();
-
+        new DeadLock();
     }
 }
 
-class MyThread1 extends Thread {
-    ResourceA resourceA;
+class A {
+    synchronized void foo(B b) {
+        String name = Thread.currentThread().getName();
+        System.out.println(name + " came to A.foo() method");
 
-    @Override
-    public void run() {
-        System.out.println(resourceA.getI());
+        try{
+            Thread.sleep(1000);
+        } catch (Exception e) {
+            System.out.println("Class A ERROR");
+        }
+
+        System.out.println(name + " try to call B.last() method");
+        b.last();
+
+    }
+
+    synchronized void last() {
+        System.out.println("In A.last() method");
     }
 }
 
-class MyThread2 extends Thread {
-    ResourceB resourceB;
+class B {
+    synchronized void bar(A a) {
+        String name = Thread.currentThread().getName();
+        System.out.println(name + " came in B.bar() method");
 
-    @Override
-    public void run() {
-        System.out.println(resourceB.getI());
-    }
-}
+        try {
+            Thread.sleep(1000);
+        } catch (Exception e) {
+            System.out.println("Class B ERROR");
+        }
 
-class ResourceA {
-    ResourceB resourceB;
-    public synchronized int getI() {
-
-        return resourceB.returnI();
-    }
-
-    public synchronized int returnI(){
-        return 1;
-    }
-}
-
-class ResourceB {
-    ResourceA resourceA;
-
-    public synchronized int getI() {
-        return resourceA.returnI();
+        System.out.println(name + " try to call A.last() method");
+        a.last();
     }
 
-    public synchronized int returnI(){
-        return 2;
+    synchronized void last() {
+        System.out.println("in A.last() method");
     }
 }

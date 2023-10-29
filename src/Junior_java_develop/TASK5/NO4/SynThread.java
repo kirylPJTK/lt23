@@ -1,13 +1,13 @@
 package Junior_java_develop.TASK5.NO4;
 
-import java.sql.SQLOutput;
 
 public class SynThread {
     public static void main(String[] args) {
         Callme target = new Callme();
-        Caller ob1 = new Caller("Welcome", target);
-        Caller ob2 = new Caller("to synchronized", target);
-        Caller ob3 = new Caller("world!", target);
+        Caller ob1 = new Caller(target, "Welcome");
+        Caller ob2 = new Caller(target, "to synchronized");
+        Caller ob3 = new Caller(target, "world!");
+
 
         try {
             ob1.t.join();
@@ -20,16 +20,14 @@ public class SynThread {
 }
 
 class Callme {
-    public void call(String msg) {
-        synchronized (this) {
-            System.out.print("[" + msg);
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                System.out.println("ERROR");
-            }
-            System.out.println("]");
+    synchronized void call(String msg) {
+        System.out.print("[" + msg);
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            System.out.println("ERROR");
         }
+        System.out.println("]");
     }
 }
 
@@ -38,15 +36,17 @@ class Caller implements Runnable {
     Callme target;
     Thread t;
 
-    public Caller(String msg, Callme target) {
-        this.msg = msg;
-        this.target = target;
+    public Caller(Callme targ, String s) {
+        this.target = targ;
+        this.msg = s;
         t = new Thread(this);
         t.start();
     }
 
     @Override
     public void run() {
-        target.call(msg);
+//        synchronized (target){
+            target.call(msg);
+//        }
     }
 }

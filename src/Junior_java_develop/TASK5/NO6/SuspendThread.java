@@ -71,5 +71,6 @@ class NewThread implements Runnable{
     synchronized void myresume() {
         suspendFlag = false;
         notify();
+
     }
 }

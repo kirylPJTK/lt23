@@ -6,9 +6,13 @@ public class SuspendThread {
         NewThread ob2 = new NewThread("Two");
 
         try{
+            System.out.println(ob2.t.getState());
+            System.out.println(ob1.t.getState());
             Thread.sleep(1000);
             ob1.mysuspend();
             System.out.println("Pause Thread One");
+            System.out.println(ob2.t.getState());
+            System.out.println(ob1.t.getState());
             Thread.sleep(1000);
             ob1.myresume();
             System.out.println("Continue Thread One");
@@ -17,6 +21,8 @@ public class SuspendThread {
             Thread.sleep(1000);
             ob2.myresume();
             System.out.println("Continue Thread Two");
+            System.out.println(ob2.t.getState());
+            System.out.println(ob1.t.getState());
         } catch (InterruptedException e) {
             System.out.println("ERROR");
         }

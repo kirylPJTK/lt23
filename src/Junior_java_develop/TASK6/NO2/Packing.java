@@ -8,5 +8,6 @@ public class Packing {
     }
     static int m(Integer ob) {
         return ob;
+
     }
 }

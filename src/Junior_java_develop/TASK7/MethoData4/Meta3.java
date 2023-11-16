@@ -5,11 +5,11 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.reflect.Method;
 
-@What (description = "Аннотация тестового класса" )
-@MyAnno(str = "Meta2", val = 99)
+@What (description = "Text class annotation" )
+@MyAnno(str = "Meta3", val = 99)
 public class Meta3 {
-    @What(description = "Text class annptation")
-    @MyAnno(str = "Meta3", val = 99)
+    @What(description = "Method annotation")
+    @MyAnno(str = "Testing", val = 100)
     public static void myMeth() {
         Meta3 ob = new Meta3();
 
@@ -18,7 +18,7 @@ public class Meta3 {
             System.out.println("All annotations for Meta3 class");
 
             for (Annotation a : annos) {
-                System.out.print(a + " ");
+                System.out.println(a + " ");
             }
             System.out.println();
 
@@ -27,7 +27,7 @@ public class Meta3 {
 
             System.out.println("All annotations for myMeth() method");
             for (Annotation a : annos) {
-                System.out.print(a + " ");
+                System.out.println(a + " ");
             }
         } catch (NoSuchMethodException e) {
             System.out.println("NO SUCH METHOD");

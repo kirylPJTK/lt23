@@ -11,9 +11,9 @@ public class TinyEdit {
         String[] str = new String[100];
 
         System.out.println("Write text lines");
-        System.out.println("Write STOP to exit");
+        System.out.println("Write <stop> to exit");
 
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < str.length; i++) {
             str[i] = br.readLine();
             if (str[i].equals("stop")) {
                 break;

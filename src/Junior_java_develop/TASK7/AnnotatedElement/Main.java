@@ -28,6 +28,8 @@ public class Main {
 @Retention(RetentionPolicy.RUNTIME)
 @interface MyAnno {
     String str() default "Testing";
+
+    int[] arr = new int[10];
     int val() default 9000;
 
 }
